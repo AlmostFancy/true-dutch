@@ -1,4 +1,4 @@
-[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://github.com/almostfancy/true-dutch/LICENSE.txt)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://github.com/AlmostFancy/true-dutch/blob/master/LICENSE.txt)
 [![NPM](https://img.shields.io/npm/v/@almost-fancy/true-dutch)](https://www.npmjs.com/package/@almost-fancy/true-dutch)
 
 ## Installation
