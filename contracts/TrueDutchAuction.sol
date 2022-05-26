@@ -3,7 +3,7 @@
 pragma solidity ^0.8.4;
 
 import "./ITrueDutchAuction.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@rari-capital/solmate/src/utils/ReentrancyGuard.sol";
 
 abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
     struct DutchAuctionConfig {
@@ -17,7 +17,8 @@ abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
         uint256 maxPerTx; // @dev max amount of bids per transaction
     }
 
-    constructor(DutchAuctionConfig memory _config, address payable _beneficiary) {
+    constructor(DutchAuctionConfig memory _config, address payable _beneficiary)
+    {
         dutchConfig = _config;
         dropsPerStep =
             (_config.startPriceWei - _config.endPriceWei) /
@@ -33,10 +34,10 @@ abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
 
     uint256 internal lastDutchPrice;
 
-    bool public refundsEnabled = false;
+    bool public refundsEnabled;
     mapping(address => bool) private claimedRefunds;
     mapping(address => AuctionBid[]) public auctionBids;
-    bool private auctionProfitsWithdrawn = false;
+    bool private auctionProfitsWithdrawn;
 
     function _setBeneficiary(address payable _beneficiary) internal {
         beneficiary = _beneficiary;
@@ -52,21 +53,32 @@ abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
     // @dev this method is called by _placeAuctionBid() after the sanity checks have
     // been completed.
     // this is where safeMint() and similar functions should be called
-    function _handleBidPlaced(address whom, uint256 quantity, uint256 priceToPay) internal virtual;
+    function _handleBidPlaced(
+        address whom,
+        uint256 quantity,
+        uint256 priceToPay
+    ) internal virtual;
 
     function _placeAuctionBid(address who, uint256 quantity) internal virtual {
         DutchAuctionConfig memory saleConfig = dutchConfig;
         // solhint-disable-next-line reason-string
         require(
             // solhint-disable-next-line not-rely-on-time
-            saleConfig.saleStartTime != 0 && block.timestamp >= saleConfig.saleStartTime,
+            saleConfig.saleStartTime != 0 &&
+                block.timestamp >= saleConfig.saleStartTime,
             "TrueDutchAuction: Dutch auction has not started yet!"
         );
         // solhint-disable-next-line reason-string
-        require(quantity <= saleConfig.maxPerTx, "TrueDutchAuction: Exceeds max per tx");
+        require(
+            quantity <= saleConfig.maxPerTx,
+            "TrueDutchAuction: Exceeds max per tx"
+        );
         uint256 dutchPrice = getDutchPrice();
         // solhint-disable-next-line reason-string
-        require(msg.value >= quantity * dutchPrice, "TrueDutchAuction: Not enough ETH sent");
+        require(
+            msg.value >= quantity * dutchPrice,
+            "TrueDutchAuction: Not enough ETH sent"
+        );
         if (saleConfig.maxBidsPerAddress != 0) {
             // solhint-disable-next-line reason-string
             require(
@@ -89,12 +101,7 @@ abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
         _handleBidPlaced(who, quantity, dutchPrice); // @dev check _handleBidPlaced() notes
         // store auction data for refunds later on
         auctionBids[who].push(
-            AuctionBid({
-                quantity: quantity,
-                bid: dutchPrice,
-                // solhint-disable-next-line not-rely-on-time
-                timestamp: block.timestamp
-            })
+            AuctionBid({quantity: quantity, bid: dutchPrice})
         );
         emit BidPlaced(who, quantity, dutchPrice);
     }
@@ -146,7 +153,10 @@ abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
         }
         claimedRefunds[msg.sender] = true;
         // solhint-disable-next-line reason-string
-        require(refund > 0, "TrueDutchAuction: You are not eligible for a refund!");
+        require(
+            refund > 0,
+            "TrueDutchAuction: You are not eligible for a refund!"
+        );
         // solhint-disable-next-line avoid-low-level-calls
         (bool success, ) = msg.sender.call{value: refund}("");
         require(success, "TrueDutchAuction: Refund failed.");
@@ -158,9 +168,15 @@ abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
     // can only be called once.
     function _withdrawDutchProfits() internal nonReentrant {
         // solhint-disable-next-line reason-string
-        require(!auctionProfitsWithdrawn, "TrueDutchAuction: Dutch Auction profits have already been paid out");
+        require(
+            !auctionProfitsWithdrawn,
+            "TrueDutchAuction: Dutch Auction profits have already been paid out"
+        );
         // solhint-disable-next-line reason-string
-        require(lastDutchPrice > 0, "TrueDutchAuction: The Dutch Auction has not ended yet");
+        require(
+            lastDutchPrice > 0,
+            "TrueDutchAuction: The Dutch Auction has not ended yet"
+        );
         uint256 profits = totalSales * lastDutchPrice;
 
         // solhint-disable-next-line avoid-low-level-calls
@@ -177,7 +193,12 @@ abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
         lastDutchPrice = floor;
     }
 
-    function getBidsFrom(address bidder) external view override returns(AuctionBid[] memory) {
+    function getBidsFrom(address bidder)
+        external
+        view
+        override
+        returns (AuctionBid[] memory)
+    {
         return auctionBids[bidder];
     }
 }

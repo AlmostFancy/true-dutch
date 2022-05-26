@@ -6,7 +6,6 @@ interface ITrueDutchAuction {
     struct AuctionBid {
         uint256 quantity;
         uint256 bid;
-        uint256 timestamp;
     }
 
     event RefundPaid(
