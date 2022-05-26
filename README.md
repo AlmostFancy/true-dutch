@@ -3,6 +3,14 @@
 
 ## Installation
 
+Forge:
+
+```sh
+forge install almostfancy/true-dutch
+```
+
+Hardhat or Truffle:
+
 ```sh
 npm install -D @almost-fancy/true-dutch
 ```
