@@ -3,7 +3,7 @@
 pragma solidity ^0.8.4;
 
 import "./ITrueDutchAuction.sol";
-import "@rari-capital/solmate/src/utils/ReentrancyGuard.sol";
+import "solmate/utils/ReentrancyGuard.sol";
 
 abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
     struct DutchAuctionConfig {

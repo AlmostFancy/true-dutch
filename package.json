@@ -3,7 +3,7 @@
   "version": "1.0.3",
   "description": "True Dutch Auction contract for solidity",
   "files": [
-    "/contracts/**/*.sol"
+    "/src/*.sol"
   ],
   "repository": {
     "type": "git",
