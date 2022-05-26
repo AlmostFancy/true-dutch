@@ -1,6 +1,6 @@
 {
   "name": "@almost-fancy/true-dutch",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "True Dutch Auction contract for solidity",
   "files": [
     "/src/*.sol"

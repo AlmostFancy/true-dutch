@@ -142,19 +142,20 @@ abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
         AuctionBid[] memory bids = auctionBids[msg.sender];
         // solhint-disable-next-line reason-string
         require(
-            bids.length > 0,
+            bids.length != 0,
             "TrueDutchAuction: You are not eligible for a refund!"
         );
 
+        uint256 bidLength = bids.length;
         uint256 refund = 0;
-        for (uint256 i = 0; i < bids.length; i++) {
+        for (uint256 i = 0; i < bidLength; i = _uncheckedIncrement(i)) {
             AuctionBid memory bid = bids[i];
             refund += (bid.bid * bid.quantity) - lastDutchPrice; // should be safe from underflows
         }
         claimedRefunds[msg.sender] = true;
         // solhint-disable-next-line reason-string
         require(
-            refund > 0,
+            refund != 0,
             "TrueDutchAuction: You are not eligible for a refund!"
         );
         // solhint-disable-next-line avoid-low-level-calls
@@ -174,7 +175,7 @@ abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
         );
         // solhint-disable-next-line reason-string
         require(
-            lastDutchPrice > 0,
+            lastDutchPrice != 0,
             "TrueDutchAuction: The Dutch Auction has not ended yet"
         );
         uint256 profits = totalSales * lastDutchPrice;

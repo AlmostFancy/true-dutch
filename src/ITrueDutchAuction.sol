@@ -27,4 +27,14 @@ interface ITrueDutchAuction {
         returns (AuctionBid[] memory);
 
     function getDutchPrice() external view returns (uint256);
+
+    function _uncheckedIncrement(uint256 counter)
+        internal
+        pure
+        returns (uint256)
+    {
+        unchecked {
+            return counter + 1;
+        }
+    }
 }
