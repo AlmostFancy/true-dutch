@@ -1,7 +1,7 @@
 pragma solidity ^0.8.4;
 
-import {TrueDutchAuction} from "../../TrueDutchAuction.sol";
-import {console2} from "forge-std/console2.sol";
+import { TrueDutchAuction } from '../../TrueDutchAuction.sol';
+import { console2 } from 'forge-std/console2.sol';
 
 contract MockTrueDutch is TrueDutchAuction {
     constructor()
@@ -30,7 +30,7 @@ contract MockTrueDutch is TrueDutchAuction {
         uint256 priceToPay
     ) internal view override {
         console2.log(
-            "Handled bid placed (addr, q, p)",
+            'Handled bid placed (addr, q, p)',
             whom,
             quantity,
             priceToPay
