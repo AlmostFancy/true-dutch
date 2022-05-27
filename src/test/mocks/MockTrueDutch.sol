@@ -4,6 +4,8 @@ import { TrueDutchAuction } from '../../TrueDutchAuction.sol';
 import { console2 } from 'forge-std/console2.sol';
 
 contract MockTrueDutch is TrueDutchAuction {
+    mapping(address => uint256) private balances;
+
     constructor()
         TrueDutchAuction(
             DutchAuctionConfig({
@@ -28,12 +30,18 @@ contract MockTrueDutch is TrueDutchAuction {
         address whom,
         uint256 quantity,
         uint256 priceToPay
-    ) internal view override {
+    ) internal override {
         console2.log(
             'Handled bid placed (addr, q, p)',
             whom,
             quantity,
             priceToPay
         );
+        balances[whom] += quantity;
+    }
+
+    function balanceOf(address _address) public view returns (uint256) {
+        console2.log('from', _address);
+        return balances[_address];
     }
 }
