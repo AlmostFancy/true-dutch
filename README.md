@@ -22,7 +22,7 @@ To get started, you can use the library as follows:
 ```solidity
 pragma solidity ^0.8.4;
 
-import "@almost-fancy/true-dutch/contracts/TrueDutchAuction.sol";
+import { TrueDutchAuction } from "@almost-fancy/true-dutch/src/TrueDutchAuction.sol";
 
 contract AlmostFancy is TrueDutchAuction, ERC721A {
   constructor(address payable _beneficiary)
