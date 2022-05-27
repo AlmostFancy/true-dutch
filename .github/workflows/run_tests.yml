@@ -1,30 +1,26 @@
 name: Run Foundry Tests
-on: [push, pull_request]
-
-
-name: Tests
 
 on: [push, pull_request]
 
 jobs:
-  tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+    tests:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
 
-      - name: Install Foundry
-        uses: onbjerg/foundry-toolchain@v1
-        with:
-          version: nightly
+            - name: Install Foundry
+              uses: onbjerg/foundry-toolchain@v1
+              with:
+                  version: nightly
 
-      - name: Install dependencies
-        run: forge install
+            - name: Install dependencies
+              run: forge install
 
-      - name: Check contract sizes
-        run: forge build --sizes
+            - name: Check contract sizes
+              run: forge build --sizes
 
-      - name: Check gas snapshots
-        run: forge snapshot --check
+            - name: Check gas snapshots
+              run: forge snapshot --check
 
-      - name: Run tests
-        run: forge test
+            - name: Run tests
+              run: forge test
