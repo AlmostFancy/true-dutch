@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-// TrueDutchAuction contracts, written by AlmostFancy
 pragma solidity ^0.8.4;
 
 import {ITrueDutchAuction} from "./ITrueDutchAuction.sol";
 import {ReentrancyGuard} from "solmate/utils/ReentrancyGuard.sol";
 
+// @author Erik (https://github.com/exception)
 abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
     struct DutchAuctionConfig {
         uint256 saleStartTime;

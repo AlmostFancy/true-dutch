@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-// TrueDutchAuction contracts, written by AlmostFancy
 pragma solidity ^0.8.4;
 
+// @author Erik (https://github.com/exception)
 interface ITrueDutchAuction {
     error AuctionNotStarted();
     error AuctionBidExceedsMaxPerTx();
