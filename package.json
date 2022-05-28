@@ -1,9 +1,9 @@
 {
   "name": "@almost-fancy/true-dutch",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "True Dutch Auction contract for solidity",
   "files": [
-    "/src/*.sol"
+    "/contracts/*.sol"
   ],
   "repository": {
     "type": "git",
