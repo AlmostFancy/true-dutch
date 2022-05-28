@@ -2,7 +2,7 @@
 pragma solidity ^0.8.4;
 
 import {ITrueDutchAuction} from "./ITrueDutchAuction.sol";
-import {ReentrancyGuard} from "solmate/utils/ReentrancyGuard.sol";
+import {ReentrancyGuard} from "@rari-capital/solmate/src/utils/ReentrancyGuard.sol";
 
 // @author Erik (https://github.com/exception)
 abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {

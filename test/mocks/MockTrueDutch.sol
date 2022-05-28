@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import { TrueDutchAuction } from '../../TrueDutchAuction.sol';
+import { TrueDutchAuction } from '../../contracts/TrueDutchAuction.sol';
 import { console2 } from 'forge-std/console2.sol';
 
 // @dev Represents a mocked dutch auction which simulates emitting tokens by

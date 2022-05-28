@@ -1,6 +1,6 @@
 {
   "name": "@almost-fancy/true-dutch",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "True Dutch Auction contract for solidity",
   "files": [
     "/src/*.sol"
@@ -16,5 +16,8 @@
     "url": "https://github.com/AlmostFancy/true-dutch/issues"
   },
   "author": "almostfancy",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@rari-capital/solmate": "^6.4.0"
+  }
 }

@@ -3,7 +3,7 @@ pragma solidity ^0.8.4;
 
 import { Test } from 'forge-std/Test.sol';
 import { MockTrueDutch } from './mocks/MockTrueDutch.sol';
-import { ITrueDutchAuction } from '../ITrueDutchAuction.sol';
+import { ITrueDutchAuction } from '../contracts/ITrueDutchAuction.sol';
 import { console2 } from 'forge-std/console2.sol';
 
 contract TrueDutchAuctionTest is Test {
