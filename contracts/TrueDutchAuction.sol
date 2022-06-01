@@ -145,11 +145,11 @@ abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
         if (refund == 0) {
             revert NotEligibleForRefund();
         }
+        emit RefundPaid(msg.sender, bids, lastDutchPrice, refund);
         (bool success, ) = msg.sender.call{value: refund}("");
         if (!success) {
             revert RefundFailed();
         }
-        emit RefundPaid(msg.sender, bids, lastDutchPrice, refund);
     }
 
     // @dev withdraws profits made from the dutch auction, multiplies
@@ -163,12 +163,12 @@ abstract contract TrueDutchAuction is ITrueDutchAuction, ReentrancyGuard {
             revert AuctionNotOver();
         }
         uint256 profits = totalSales * lastDutchPrice;
+        auctionProfitsWithdrawn = true;
         // solhint-disable-next-line avoid-low-level-calls
         (bool success, ) = beneficiary.call{value: profits}("");
         if (!success) {
             revert WithdrawFailed();
         }
-        auctionProfitsWithdrawn = true;
     }
 
     // @dev this is meant to be used as a last resort or for dev purposes
