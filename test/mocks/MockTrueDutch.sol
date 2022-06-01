@@ -2,7 +2,6 @@
 pragma solidity ^0.8.4;
 
 import { TrueDutchAuction } from '../../contracts/TrueDutchAuction.sol';
-import { console2 } from 'forge-std/console2.sol';
 
 // @dev Represents a mocked dutch auction which simulates emitting tokens by
 // updating a balance mapping.
@@ -12,7 +11,7 @@ contract MockTrueDutch is TrueDutchAuction {
     constructor()
         TrueDutchAuction(
             DutchAuctionConfig({
-                saleStartTime: block.timestamp + 1 minutes,
+                saleStartTime: block.timestamp,
                 startPriceWei: 1 ether,
                 endPriceWei: 0.1 ether,
                 duration: 1 hours,
@@ -32,19 +31,12 @@ contract MockTrueDutch is TrueDutchAuction {
     function _handleBidPlaced(
         address whom,
         uint256 quantity,
-        uint256 priceToPay
+        uint256 _priceToPay
     ) internal override {
-        console2.log(
-            'Handled bid placed (addr, q, p)',
-            whom,
-            quantity,
-            priceToPay
-        );
         balances[whom] += quantity;
     }
 
     function balanceOf(address _address) public view returns (uint256) {
-        console2.log('from', _address);
         return balances[_address];
     }
 }
